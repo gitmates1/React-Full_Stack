@@ -10,7 +10,6 @@ import Contact from "./pages/Contact";
 import PriceComparison from "./components/PriceComparison";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Protected from "./pages/Protected";
 
 function App() {
   return (
@@ -36,7 +35,6 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/protected" element={<Protected />} />
 
         
       </Routes>

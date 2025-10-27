@@ -1,4 +1,5 @@
 // backend/routes/auth.js
+
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
@@ -8,11 +9,7 @@ const User = require("../models/user");
 const SECRET = process.env.JWT_SECRET || "fallbacksecret";
 const TOKEN_EXPIRES = "7d";
 
-/**
- * POST /api/auth/signup
- * Body: { name, email, password }
- * Response: { message, token, user }
- */
+// Signup
 router.post("/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -27,28 +24,18 @@ router.post("/signup", async (req, res) => {
     await user.save();
 
     const token = jwt.sign({ id: user._id, email: user.email }, SECRET, { expiresIn: TOKEN_EXPIRES });
-
-    res.status(201).json({
-      message: "Account Created",
-      token,
-      user: { id: user._id, name: user.name, email: user.email }
-    });
+    res.status(201).json({ message: "Account Created", token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
     console.error("Signup Error:", err);
     res.status(500).json({ message: "Server Error" });
   }
 });
 
-/**
- * POST /api/auth/login
- * Body: { email, password }
- * Response: { message, token, user }
- */
+// Login
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password)
-      return res.status(400).json({ message: "All fields required" });
+    if (!email || !password) return res.status(400).json({ message: "All fields required" });
 
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
@@ -57,12 +44,7 @@ router.post("/login", async (req, res) => {
     if (!match) return res.status(400).json({ message: "Invalid credentials" });
 
     const token = jwt.sign({ id: user._id, email: user.email }, SECRET, { expiresIn: TOKEN_EXPIRES });
-
-    res.json({
-      message: "Login Successful",
-      token,
-      user: { id: user._id, name: user.name, email: user.email }
-    });
+    res.json({ message: "Login Successful", token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
     console.error("Login Error:", err);
     res.status(500).json({ message: "Server Error" });

@@ -1,8 +1,10 @@
 {
-  "name": "myapp",
+  "name": "awd",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run server --prefix BackEnd\" \"npm run dev --prefix FrontEnd\""
+    "dev": "concurrently \"npm run server --prefix BackEnd\" \"npm run dev --prefix FrontEnd\"",
+    "server": "npm run dev --prefix BackEnd"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

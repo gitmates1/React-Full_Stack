@@ -1,4 +1,25 @@
+# Node modules
 node_modules/
+
+# Frontend node modules
 FrontEnd/node_modules/
+
+# Backend node modules
+BackEnd/node_modules/
+
+# Environment variables
 .env
+FrontEnd/.env
 BackEnd/.env
+
+# Vite build output
+FrontEnd/dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
