@@ -42,7 +42,7 @@ export default function Signup() {
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <input type="password" placeholder="Password 8 characters (@Like_12)" value={password} onChange={(e) => setPassword(e.target.value)} required />
         <button type="submit" disabled={loading}>{loading ? "Creating..." : "Sign Up"}</button>
-        <p>Already have an account? <a href="/login" style={{ fontFamily: "Calibri" }}>Login</a></p>
+        <p>Already have an account? <a href="/login" style={{ fontFamily: "Calibri" }}>Login here</a></p>
       </form>
     </div>
   );
