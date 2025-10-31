@@ -1,0 +1,155 @@
+/* Base Layout */
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f6f6f6;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #d33c44, #f26771);
+  color: white;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar .logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sidebar .logo span {
+  color: #fff3e0;
+}
+
+.sidebar .menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar .menu li {
+  margin: 1rem 0;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sidebar .menu li:hover,
+.sidebar .menu li.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Main Section */
+.main {
+  flex: 1;
+  padding: 2rem 3rem;
+  overflow-y: auto;
+}
+
+/* Header */
+.dashboard-header h1 {
+  font-size: 2rem;
+  color: #d33c44;
+}
+
+.dashboard-header p {
+  color: #777;
+  margin-top: 0.3rem;
+}
+
+/* Stats Cards */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.card p {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #d33c44;
+  margin-top: 0.5rem;
+}
+
+/* Recent Orders */
+.recent-orders {
+  margin-top: 3rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.recent-orders h2 {
+  margin-bottom: 1rem;
+  color: #d33c44;
+}
+
+.recent-orders table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recent-orders th,
+.recent-orders td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+.status {
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: white;
+}
+
+.status.delivered {
+  background: #28a745;
+}
+
+.status.pending {
+  background: #ffc107;
+  color: #333;
+}
+
+.status.cancelled {
+  background: #dc3545;
+}
+
+/* Scrollbar Styling */
+.main::-webkit-scrollbar {
+  width: 8px;
+}
+.main::-webkit-scrollbar-thumb {
+  background: #d33c44;
+  border-radius: 4px;
+}
+

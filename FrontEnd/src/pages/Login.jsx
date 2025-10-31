@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
 
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // Login fields
   const [loginEmail, setLoginEmail] = useState("");
@@ -15,9 +17,7 @@ const Login = () => {
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
 
-  const handleToggle = () => {
-    setIsSignUp(!isSignUp);
-  };
+  const handleToggle = () => setIsSignUp(!isSignUp);
 
   // ------------------ LOGIN ------------------
   const handleLogin = async (e) => {
@@ -30,17 +30,19 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post("/api/auth/login", {
+      const { data } = await axios.post("/api/auth/login", {
         email: loginEmail,
         password: loginPassword,
       });
 
-      console.log("Login Success:", response.data);
       alert("Login Successful!");
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
       setLoginEmail("");
       setLoginPassword("");
+
+      navigate("/dashboard");
     } catch (error) {
       console.error("Login Error:", error);
       alert(error.response?.data?.message || "Invalid Credentials!");
@@ -59,21 +61,18 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post("/api/auth/signup", {
+      const { data } = await axios.post("/api/auth/signup", {
         name,
         email: signUpEmail,
         password: signUpPassword,
       });
 
-      console.log("Signup Success:", response.data);
       alert("Account created successfully! You can now sign in.");
 
-      // Reset signup fields
       setName("");
       setSignUpEmail("");
       setSignUpPassword("");
 
-      // Automatically switch to login view
       setIsSignUp(false);
     } catch (error) {
       console.error("Signup Error:", error);
@@ -89,27 +88,9 @@ const Login = () => {
         <div className="form-container sign-up">
           <form onSubmit={handleSignUp}>
             <h1>Create Account</h1>
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={signUpEmail}
-              onChange={(e) => setSignUpEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={signUpPassword}
-              onChange={(e) => setSignUpPassword(e.target.value)}
-              required
-            />
+            <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
+            <input type="email" placeholder="Email" value={signUpEmail} onChange={(e) => setSignUpEmail(e.target.value)} required />
+            <input type="password" placeholder="Password" value={signUpPassword} onChange={(e) => setSignUpPassword(e.target.value)} required />
             <button type="submit" disabled={loading}>
               {loading ? "Creating..." : "Sign Up"}
             </button>
@@ -120,20 +101,8 @@ const Login = () => {
         <div className="form-container sign-in">
           <form onSubmit={handleLogin}>
             <h1>Sign In</h1>
-            <input
-              type="email"
-              placeholder="Email"
-              value={loginEmail}
-              onChange={(e) => setLoginEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value)}
-              required
-            />
+            <input type="email" placeholder="Email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} required />
+            <input type="password" placeholder="Password" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} required />
             <button type="submit" disabled={loading}>
               {loading ? "Verifying..." : "Sign In"}
             </button>
