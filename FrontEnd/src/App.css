@@ -40,3 +40,8 @@
 .read-the-docs {
   color: #888;
 }
+
+header, footer {
+  position: relative;
+  z-index: 1000;
+}
