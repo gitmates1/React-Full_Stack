@@ -1,5 +1,5 @@
 // src/App.jsx
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -10,15 +10,16 @@ import Contact from "./pages/Contact";
 import PriceComparison from "./components/PriceComparison";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <Header />
 
       <Routes>
         {/* Home Page */}
-       <Route
+        <Route
           path="/"
           element={
             <>
@@ -28,19 +29,25 @@ function App() {
           }
         />
 
-        {/* Other Pages */}
+        {/* Normal public pages */}
         <Route path="/shop" element={<Shop />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
 
-        
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 

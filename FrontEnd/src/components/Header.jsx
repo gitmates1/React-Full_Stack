@@ -14,6 +14,11 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/dashboard" end className={({ isActive }) => (isActive ? "active" : "")}>
+              Dashboard
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/shop" className={({ isActive }) => (isActive ? "active" : "")}>
               Shop
             </NavLink>
@@ -34,13 +39,10 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-  <NavLink
-    to="/login"
-    className={({ isActive }) => (isActive ? "login-link active" : "login-link")}
-  >
-    Login
-  </NavLink>
-</li>
+            <NavLink to="/login" className={({ isActive }) => (isActive ? "login-link active" : "login-link")}>
+              Login
+            </NavLink>
+          </li>
           <li id="lg-bag">
             <NavLink to="/cart" className={({ isActive }) => (isActive ? "active" : "")}>
               <i className="fa-solid fa-cart-shopping clr-pad"></i>
