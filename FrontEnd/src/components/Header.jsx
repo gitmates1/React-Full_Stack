@@ -1,8 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
   return (
     <section id="header">
       <img src={logo} alt="logo" />
@@ -13,11 +16,7 @@ const Header = () => {
               Home
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/dashboard" end className={({ isActive }) => (isActive ? "active" : "")}>
-              Dashboard
-            </NavLink>
-          </li>
+
           <li>
             <NavLink to="/shop" className={({ isActive }) => (isActive ? "active" : "")}>
               Shop
@@ -38,22 +37,30 @@ const Header = () => {
               Contact
             </NavLink>
           </li>
+
+          {/* ✅ This part auto-switches */}
           <li>
-            <NavLink to="/login" className={({ isActive }) => (isActive ? "login-link active" : "login-link")}>
-              Login
+            <NavLink
+              to={token ? "/dashboard" : "/login"}
+              className={({ isActive }) =>
+                isActive ? "login-link active" : "login-link"
+              }
+            >
+              {token ? "Dashboard" : "Login"}
             </NavLink>
           </li>
+
           <li id="lg-bag">
             <NavLink to="/cart" className={({ isActive }) => (isActive ? "active" : "")}>
               <i className="fa-solid fa-cart-shopping clr-pad"></i>
             </NavLink>
           </li>
+
           <a href="#" title="close" id="close1">
             <i className="fa-solid fa-xmark"></i>
           </a>
         </ul>
       </div>
-
     </section>
   );
 };
