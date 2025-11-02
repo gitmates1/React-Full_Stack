@@ -16,9 +16,9 @@ Includes both frontend and backend with concurrent development support.
 ## Project Structure
 
 React-Full_Stack/
-|->FrontEnd/ # React + Vite client
-|->BackEnd/ # Express + MongoDB server
-│-> package.json # Root scripts for running both
+|_FrontEnd/ # React + Vite client
+|_BackEnd/ # Express + MongoDB server
+│_package.json # Root scripts for running both
 
 ## Features
 
@@ -35,6 +35,7 @@ Uses React Icons
 ### 1️ Clone Repo
 
 git clone https://github.com/gitmates1/React-Full_Stack.git
+Then
 cd React-Full_Stack
 
 ### 2️ Install Root Dependencies
