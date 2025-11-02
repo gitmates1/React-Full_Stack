@@ -61,6 +61,8 @@ useEffect(() => {
     } catch (error) {
       console.error("Login Error:", error);
       alert(error.response?.data?.message || "Invalid Credentials!");
+      setLoginEmail("");
+      setLoginPassword("");
     }
     setLoading(false);
   };

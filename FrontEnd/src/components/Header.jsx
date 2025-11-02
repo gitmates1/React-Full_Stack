@@ -38,7 +38,7 @@ const Header = () => {
             </NavLink>
           </li>
 
-          {/* ✅ This part auto-switches */}
+          {/* This part auto-switches */}
           <li>
             <NavLink
               to={token ? "/dashboard" : "/login"}

@@ -11,13 +11,11 @@
 .sidebar {
   width: 230px;
   background-color: rgb(241, 239, 239);
-  border-radius: 12px;
   padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 112vh;
-  margin-top: 3px;
+  height: 108vh;
 }
 
 .sidebar .menu {
@@ -93,7 +91,7 @@
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  height: 69vh;
+  height: 65vh;
 }
 
 /* Scroll container */
