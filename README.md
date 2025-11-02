@@ -16,9 +16,9 @@ Includes both frontend and backend with concurrent development support.
 ## Project Structure
 
 React-Full_Stack/
-FrontEnd/ # React + Vite client
-BackEnd/ # Express + MongoDB server
-package.json # Root scripts for running both
+|__FrontEnd/ # React + Vite client
+|__BackEnd/ # Express + MongoDB server
+|__package.json # Root scripts for running both
 
 ## Features
 
