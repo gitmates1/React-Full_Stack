@@ -11,10 +11,12 @@ import PriceComparison from "./components/PriceComparison";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import ScrollToTop from "./ScrollToTop";
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop/>
       <Header />
 
       <Routes>

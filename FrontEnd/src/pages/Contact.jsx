@@ -31,8 +31,16 @@ const Contact = () => {
                 <p>arhamali111333@gmail.com</p>
               </li>
               <li>
+                <i className="fa-solid fa-envelope"></i>
+                <p>abubakar6984456@gmail.com</p>
+              </li>
+              <li>
                 <i className="fa-solid fa-phone"></i>
                 <p>0314 4963920</p>
+              </li>
+              <li>
+                <i className="fa-solid fa-phone"></i>
+                <p>0322 5911729</p>
               </li>
               <li>
                 <i className="fa-solid fa-clock"></i>

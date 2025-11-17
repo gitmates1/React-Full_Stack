@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FiHome, FiSettings, FiLogOut, FiHeart, FiShoppingBag } from "react-icons/fi";
+import { FiHome, FiSettings, FiLogOut, FiHeart, FiShoppingBag, FiShoppingCart, FiBell, FiPackage, FiDollarSign, FiBox, FiInbox, FiSpeaker, FiPercent, FiDatabase, FiDivide, FiHelpCircle, FiSearch, FiImage, FiGift } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
+import { AiFillNotification, AiFillProduct, AiFillRobot, AiFillWindows, AiOutlineAppstore, AiOutlinePound } from "react-icons/ai";
+import { FaInbox, FaJediOrder } from "react-icons/fa";
+import { TbFilterDiscount } from "react-icons/tb";
+import { BsFillBoxSeamFill, BsFillPencilFill, BsFillPeopleFill } from "react-icons/bs";
+import { LuFileBox } from "react-icons/lu";
 
 const Dashboard = () => {
 const [user, setUser] = useState(null);
@@ -20,6 +25,10 @@ const navigate = useNavigate();
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
+
+    setTimeout(() => {
+    alert("You are now logout.");
+    }, 300);
   };
 
   return (
@@ -27,10 +36,19 @@ const navigate = useNavigate();
       {/* Sidebar */}
       <aside className="sidebar">
         <ul className="menu">
-          <li className="active"><FiHome /> Dashboard</li>
+          <li className="active"><AiOutlineAppstore /> Home</li>
           <li><FiShoppingBag /> Orders</li>
           <li><FiHeart /> Wishlist</li>
+          <li><AiFillProduct /> Products</li>
+          {/* <li><BsFillPeopleFill/> Customers</li> */}
+          <li><AiOutlinePound /> Payments</li>
+          <li><FiShoppingCart /> Cart</li>
+          <li><FiGift/> Special Offers</li>
+          <li><FiBell /> Notifications</li>
+          <br></br>
+          <hr></hr>
           <li><FiSettings /> Settings</li>
+          <li><FiHelpCircle /> Help</li>
           <li className="logout" onClick={handleLogout}><FiLogOut /> Logout</li>
         </ul>
       </aside>
@@ -38,39 +56,41 @@ const navigate = useNavigate();
       {/* Main Content */}
       <main className="main">
         <header className="dashboard-header">
-          <h3>Welcome, {user ? user.name : "User"} 👋</h3>
-          <p>What's going on today?</p>
+          <p1>Dashboard</p1> <span></span>
+          <BsFillPencilFill/>
+                 
+          <p>Welcome, {user ? user.name : "User"} 👋</p>
         </header>
 
-        <section className="stats">
+        <secton className = "cards">
           <div className="card">
-            <h3>Orders</h3>
-            <p>25</p>
+            <h3>Total Orders</h3>
+            <p style={{textDecoration: "none"}}>456</p>
           </div>
           <div className="card">
-            <h3>Wishlist</h3>
-            <p>12</p>
+            <h3>Total Price</h3>
+            <p>Rs.1,23,000</p>
           </div>
           <div className="card">
-            <h3>Cart Items</h3>
-            <p>4</p>
+            <h3>Total Items</h3>
+            <p>124</p>
           </div>
           <div className="card">
-            <h3>Notifications</h3>
-            <p>3</p>
+            <h3>Cart</h3>
+            <p>200</p>
           </div>
-        </section>
-
+        </secton>
+        <div className="recent-side">
         <section className="recent-orders">
-          <h4>Recent Orders</h4>
+          <h4 style={{fontFamily: "calibri"}}>Recent Orders</h4>
           <div className="table-scroll">
            <table>
             <thead>
               <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>Status</th>
-                <th>Date</th>
+                <th style={{fontWeight: "550"}}>#</th>
+                <th style={{fontWeight: "550"}}>Product</th>
+                <th style={{fontWeight: "550"}}>Status</th>
+                <th style={{fontWeight: "550"}}>Date</th>
               </tr>
             </thead>
             <tbody>
@@ -106,86 +126,26 @@ const navigate = useNavigate();
               </tr>
               <tr>
                 <td>6</td>
-                <td>Wireless Earbuds</td>
-                <td><span className="status cancelled">Cancelled</span></td>
-                <td>Oct 28, 2025</td>
-              </tr>
-              <tr>
-                <td>7</td>
-                <td>Nike Air Force 1</td>
-                <td><span className="status delivered">Delivered</span></td>
-                <td>Oct 30, 2025</td>
-              </tr>
-              <tr>
-                <td>8</td>
                 <td>Apple Watch SE</td>
                 <td><span className="status pending">Pending</span></td>
                 <td>Oct 29, 2025</td>
-              </tr>
-              <tr>
-                <td>9</td>
-                <td>Wireless Earbuds</td>
-                <td><span className="status cancelled">Cancelled</span></td>
-                <td>Oct 28, 2025</td>
-              </tr>
-              <tr>
-                <td>10</td>
-                <td>Nike Air Force 1</td>
-                <td><span className="status delivered">Delivered</span></td>
-                <td>Oct 30, 2025</td>
-              </tr>
-              <tr>
-                <td>12</td>
-                <td>Apple Watch SE</td>
-                <td><span className="status pending">Pending</span></td>
-                <td>Oct 29, 2025</td>
-              </tr>
-              <tr>
-                <td>13</td>
-                <td>Wireless Earbuds</td>
-                <td><span className="status cancelled">Cancelled</span></td>
-                <td>Oct 28, 2025</td>
-              </tr>
-              <tr>
-                <td>14</td>
-                <td>Nike Air Force 1</td>
-                <td><span className="status delivered">Delivered</span></td>
-                <td>Oct 30, 2025</td>
-              </tr>
-              <tr>
-                <td>15</td>
-                <td>Apple Watch SE</td>
-                <td><span className="status pending">Pending</span></td>
-                <td>Oct 29, 2025</td>
-              </tr>
-              <tr>
-                <td>16</td>
-                <td>Wireless Earbuds</td>
-                <td><span className="status cancelled">Cancelled</span></td>
-                <td>Oct 28, 2025</td>
-              </tr>
-              <tr>
-                <td>17</td>
-                <td>Nike Air Force 1</td>
-                <td><span className="status delivered">Delivered</span></td>
-                <td>Oct 30, 2025</td>
-              </tr>
-              <tr>
-                <td>18</td>
-                <td>Apple Watch SE</td>
-                <td><span className="status pending">Pending</span></td>
-                <td>Oct 29, 2025</td>
-              </tr>
-              <tr>
-                <td>19</td>
-                <td>Wireless Earbuds</td>
-                <td><span className="status cancelled">Cancelled</span></td>
-                <td>Oct 28, 2025</td>
               </tr>
              </tbody>
            </table>
           </div>
         </section>
+        <section className="side-content">
+          <h4 style={{fontFamily: "calibri"}}>AI Chatbot</h4>
+          <div className="sc-content">
+            <p><AiFillRobot />Hi, Outfitly Chatbot is here.</p>
+          </div>
+        </section>
+      </div>
+      <section className="below-content">
+        <h4 style={{fontFamily: "calibri"}}>Navigation</h4>
+          
+          
+      </section>
       </main>
     </div>
   );
