@@ -2,6 +2,9 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 
+const token = localStorage.getItem("token");
+const user = JSON.parse(localStorage.getItem("user"));
+
 const Header = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -41,14 +44,25 @@ const Header = () => {
           {/* This part auto-switches */}
           <li>
             <NavLink
-              to={token ? "/dashboard" : "/login"}
+              to={
+                token
+                  ? user?.role === "admin"
+                    ? "/admin-dashboard"
+                    : "/dashboard"
+                  : "/login"
+              }
               className={({ isActive }) =>
                 isActive ? "login-link active" : "login-link"
               }
             >
-              {token ? "Dashboard" : "Login"}
+              {token
+                ? user?.role === "admin"
+                  ? "Admin Dashboard"
+                  : "Dashboard"
+                : "Login"}
             </NavLink>
           </li>
+
 
           <li id="lg-bag">
             <NavLink to="/cart" className={({ isActive }) => (isActive ? "active" : "")}>

@@ -35,24 +35,24 @@ const Login = () => {
       .catch(() => localStorage.removeItem("token"));
   }, [navigate]);
 
-    const handleToggle = () => {
-      setIsSignUp(!isSignUp);
+  const handleToggle = () => {
+    setIsSignUp(!isSignUp);
 
-      // Clear all error messages
-      setSignUpErrors({});
-      setLoginErrors({});
+    // Clear all error messages
+    setSignUpErrors({});
+    setLoginErrors({});
 
-      if (isSignUp) {
-        // We are switching to Sign In → clear Sign Up fields
-        setName("");
-        setSignUpEmail("");
-        setSignUpPassword("");
-      } else {
-        // We are switching to Sign Up → clear Sign In fields
-        setLoginEmail("");
-        setLoginPassword("");
-      }
-    };
+    if (isSignUp) {
+      // We are switching to Sign In → clear Sign Up fields
+      setName("");
+      setSignUpEmail("");
+      setSignUpPassword("");
+    } else {
+      // We are switching to Sign Up → clear Sign In fields
+      setLoginEmail("");
+      setLoginPassword("");
+    }
+  };
 
   // ---------------- LOGIN ----------------
   const handleLogin = async (e) => {
@@ -78,8 +78,12 @@ const Login = () => {
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-
-      navigate("/dashboard");
+      // REDIRECT BASED ON ROLE
+      if (data.user.role === "admin") {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/dashboard");
+      }
 
       setTimeout(() => {
         alert("Login Successful.");
@@ -90,6 +94,7 @@ const Login = () => {
       setLoginErrors({
         loginPassword: error.response?.data?.message || "Invalid credentials!",
       });
+      alert("Invalid Credentials!");
     } finally {
       setLoading(false);
     }
@@ -122,7 +127,7 @@ const Login = () => {
         password: signUpPassword,
       });
 
-      alert("Account created! Please log in.");
+      alert("Account Created! Please Login.");
 
       setName("");
       setSignUpEmail("");
@@ -144,6 +149,7 @@ const Login = () => {
         <div className="form-container sign-up">
           <form onSubmit={handleSignUp}>
             <h3>Create Your Account</h3>
+            <br></br>
             <input
               type="text"
               placeholder="Name"
@@ -178,7 +184,7 @@ const Login = () => {
             )}
 
             <button type="submit" disabled={loading}>
-              {loading ? "Creating..." : "Register"}
+              {loading ? "Creating" : "Register"}
             </button>
           </form>
         </div>
@@ -187,7 +193,7 @@ const Login = () => {
         <div className="form-container sign-in">
           <form onSubmit={handleLogin}>
             <h3>Welcome! Please Login</h3>
-
+            <br></br>
             <input
               type="email"
               placeholder="Email"
@@ -211,8 +217,10 @@ const Login = () => {
             )}
 
             <button type="submit" disabled={loading}>
-              {loading ? "Verifying..." : "Sign In"}
+              {loading ? "Verifying" : "Sign In"}
             </button>
+            {/* <p onClick={() => navigate("/forgot-password")} className="forgot-link"> Forgot Password? </p> */}
+
           </form>
         </div>
 

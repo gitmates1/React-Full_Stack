@@ -4,6 +4,9 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const authRoutes = require("./routes/auth");
+const authMiddleware = require("./middleware/auth");
+const adminMiddleware = require("./middleware/admin");
 
 const app = express();
 app.use(cors());
@@ -13,17 +16,21 @@ app.use(express.json());
 connectDB();
 
 // Routes
-app.use("/api/auth", require("./routes/auth"));
+app.use("/api/auth", authRoutes);
 
-// Example protected route
-const authMiddleware = require("./middleware/auth");
-app.get("/api/protected", authMiddleware, (req, res) => {
-  res.json({ message: "Protected data", user: req.user });
+// User-only route
+app.get("/api/user/profile", authMiddleware, (req, res) => {
+  res.json({ message: "User Profile Access", user: req.user });
+});
+
+// Admin-only route
+app.get("/api/admin/dashboard", authMiddleware, adminMiddleware, (req, res) => {
+  res.json({ message: "Admin Dashboard Access", user: req.user });
 });
 
 // Root
-app.get("/", (req, res) => res.send("Backend Is Executing"));
+app.get("/", (req, res) => res.send("Server is running..."));
 
-// Start backend on PORT=5000
+// Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server Executes On Port: ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,9 +1,16 @@
 // src/pages/ProtectedRoute.jsx
+import React from "react";
 import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");
-  return token ? children : <Navigate to="/login" />;
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!token || !user) return <Navigate to="/login" replace />;
+
+  if (role && user.role !== role) return <Navigate to={user.role === "admin" ? "/admin-dashboard" : "/dashboard"} />;
+
+  return children;
 };
 
 export default ProtectedRoute;
