@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FiSettings, FiLogOut, FiHeart, FiShoppingBag, FiShoppingCart, FiBell, FiHelpCircle, FiChevronRight, FiHome } from "react-icons/fi";
-import { AiFillProduct, AiOutlineAppstore } from "react-icons/ai";
+import { AiFillPoundCircle, AiFillProduct, AiOutlineAppstore } from "react-icons/ai";
 import { BsFillPeopleFill, BsFillPencilFill } from "react-icons/bs";
 import { AiFillRobot } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,24 @@ const AdminDashboard = () => {
   const [user, setUser] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null); // store which dropdown is open
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [stats, setStats] = useState({
+    totalSales: 0,
+    totalCustomers: 0,
+    totalOrders: 0,
+    totalProducts: 0,
+  });
+
+  const token = localStorage.getItem("token");
+  const loadStats = async () => {
+    const res = await axios.get("/api/admin/stats", {
+      headers: { "x-auth-token": token }
+    });
+    setStats(res.data);
+  };
+
+  useEffect(() => {
+    loadStats();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -51,7 +69,7 @@ const AdminDashboard = () => {
       {/* Sidebar */}
       <aside className="sidebar">
         <ul className="menu">
-          <li className="active"><AiOutlineAppstore /> Home</li>
+          <li className="active" onClick={() => navigate("/admin-dashboard")}><AiOutlineAppstore /> Home</li>
 
           {/* Orders Dropdown */}
           <li className="dropdown-header" onClick={() => toggleDropdown("orders")}>
@@ -89,6 +107,18 @@ const AdminDashboard = () => {
               <li onClick={() => navigate("/admin/customers/add")}>Add Customer</li>
               <li onClick={() => navigate("/admin/customers/update")}>Update Customer</li>
               <li onClick={() => navigate("/admin/customers/delete")}>Delete Customer</li>
+            </ul>
+          )}
+
+          {/* Payment Dropdown */}
+          <li className="dropdown-header" onClick={() => toggleDropdown("payments")}>
+            <AiFillPoundCircle /> Manage Payments <FiChevronRight className={`arrow ${openDropdown === "payments" ? "rotate" : ""}`} />
+          </li>
+          {openDropdown === "payments" && (
+            <ul className="dropdown-menu">
+              <li onClick={() => navigate("/admin/payments/view")}></li>
+              <li onClick={() => navigate("/admin/payments/add")}></li>
+              <li onClick={() => navigate("/admin/payments/update")}></li>
             </ul>
           )}
 
@@ -135,32 +165,21 @@ const AdminDashboard = () => {
 
 
         <div className="box">
-          <div className="boxes"><h3>Total Sales</h3><p>200</p></div>
-          <div className="boxes"><h3>Total Orders</h3><p>456</p></div>
-          <div className="boxes"><h3>Total Customers</h3><p>Rs.1,23,000</p></div>
-          <div className="boxes"><h3>Total Products</h3><p>124</p></div>
+          <div className="boxes"><h3>Total Sales</h3><p>{stats.totalSales}</p></div>
+          <div className="boxes"><h3>Total Orders</h3><p>{stats.totalOrders}</p></div>
+          <div className="boxes"><h3>Total Customers</h3><p>{stats.totalCustomers}</p></div>
+          <div className="boxes"><h3>Total Products</h3><p>{stats.totalProducts}</p></div>
         </div>
 
         <br></br><hr></hr><br></br>
+
         <div className="button">
-          <button className="buttons">
-            Recent Orders
-          </button>
-          <button className="buttons">
-            Shippment Track
-          </button>
-          <button className="buttons">
-            Verify Payment
-          </button>
-          <button className="buttons">
-            Billing Zone
-          </button>
-          <button className="buttons">
-            Pending
-          </button>
-          <button className="buttons">
-            New Items
-          </button>
+          <button className="buttons"> Recent Orders {/* All Orders */} </button>
+          <button className="buttons"> Update Status {/* Mark P/C/C */} </button>
+          <button className="buttons"> Orders History {/* Customers Order History */} </button>
+          <button className="buttons"> Manage Refunds {/* Customers Refund Payment */} </button>
+          <button className="buttons"> Manage Payments {/* Payments Pending or Issues */} </button>
+          <button className="buttons"> Shipping Zone {/* Track Shipping */} </button>
         </div>
 
         <div className="recent-side">
@@ -168,6 +187,7 @@ const AdminDashboard = () => {
             <h4>Recent Orders</h4>
             {/* Table */}
           </section>
+
           <section className="side-content">
             <h4>AI Chatbot</h4>
             <p><AiFillRobot /> Hi, Outfitly Chatbot is here.</p>

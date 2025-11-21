@@ -13,6 +13,11 @@ import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import ScrollToTop from "./ScrollToTop";
+import AdminUsers from "./pages/AdminUsers";
+import UpdateUser from "./pages/UpdateUser";
+import ViewUser from "./pages/ViewUser";
+import DeleteUser from "./pages/DeleteUser";
+import Profile from "./pages/Profile"
 
 function App() {
   return (
@@ -46,6 +51,12 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/users/update/:id" element={<UpdateUser />} />
+        <Route path="/admin/users/view/:id" element={<ViewUser />} />
+        <Route path="/admin/users/delete/:id" element={<DeleteUser />} />
+        <Route path="/profile" element={<ProtectedRoute> <Profile /> </ProtectedRoute>} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />

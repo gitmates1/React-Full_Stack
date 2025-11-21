@@ -61,8 +61,8 @@ const Dashboard = () => {
 
           {openDropdown === "orders" && (
             <ul className="dropdown-menu">
-              <li>Add Order</li>
-              <li>View Orders</li>
+              <li>Track Orders</li>
+              <li>Orders History</li>
             </ul>
           )}
 
@@ -81,19 +81,8 @@ const Dashboard = () => {
             </ul>
           )}
 
-          {/* Payments ---- Dropdown */}
-          <li className="dropdown-header" onClick={() => toggleDropdown("payments")}>
-            <AiOutlinePound /> Payments
-            <FiChevronRight className={`arrow ${openDropdown === "payments" ? "rotate" : ""}`} />
-          </li>
-
-          {openDropdown === "payments" && (
-            <ul className="dropdown-menu">
-              <li>Transactions</li>
-              <li>Manage Refunds</li>
-              <li>Payment History</li>
-            </ul>
-          )}
+          {/* Payments */}
+          <li><AiOutlinePound /> Payments </li>
 
           {/* Other static items */}
           <li><FiShoppingCart /> Cart</li>
@@ -101,7 +90,7 @@ const Dashboard = () => {
 
           <hr />
 
-          <li><FiSettings /> Settings</li>
+          <li onClick={() => navigate("/profile")}><FiSettings /> Settings</li>
           <li><FiHelpCircle /> Help</li>
 
           <li className="logout" onClick={handleLogout}>
@@ -165,25 +154,14 @@ const Dashboard = () => {
         </section>
 
         <br></br><hr></hr><br></br>
+
         <div className="button">
-          <button className="buttons">
-            Your Orders
-          </button>
-          <button className="buttons">
-            Track Status
-          </button>
-          <button className="buttons">
-            Issues
-          </button>
-          <button className="buttons">
-            Refund Status
-          </button>
-          <button className="buttons">
-            Pending
-          </button>
-          <button className="buttons">
-            New Items
-          </button>
+          <button className="buttons"> Recent Orders </button>
+          <button className="buttons"> Track Status </button>
+          <button className="buttons"> Manage Refunds </button>
+          <button className="buttons"> Manage Payment </button>
+          <button className="buttons"> Payment History </button>
+          <button className="buttons"> Billing Address </button>
         </div>
 
         <div className="recent-side">
