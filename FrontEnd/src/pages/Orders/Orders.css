@@ -1,0 +1,142 @@
+/* Container */
+.order-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Heading */
+.order-container h3 {
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.order-container .btn {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.order-container .btn-primary { background-color: #dc3545; color: #fff; }
+.order-container .btn-secondary { background-color: #6c757d; color: #fff; }
+.order-container .btn-warning { background-color: #ffc107; color: #212529; }
+.order-container .btn-danger { background-color: #dc3545; color: #fff; }
+.order-container .btn-info { background-color: #17a2b8; color: #fff; }
+.order-container .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Form Card */
+.order-form-card {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Form Inputs */
+.order-form-card input,
+.order-form-card select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.order-form-card input:focus,
+.order-form-card select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Validation */
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.9em;
+}
+
+/* Responsive Table */
+.order-table-container {
+  overflow-x: auto;
+  max-height: 55vh;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.order-table th,
+.order-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.order-table th {
+  background-color: #f2f2f2;
+}
+
+.order-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.order-table tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Search and Filter */
+.order-search-filter {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.order-search-filter input,
+.order-search-filter select {
+  flex: 1;
+  min-width: 150px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Confirm Modal */
+.confirm-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.confirm-modal {
+  background-color: #fff;
+  border-radius: 8px;
+  width: 350px;
+  max-width: 90%;
+  padding: 20px;
+}
+
+.confirm-modal h5 {
+  margin-bottom: 10px;
+}
+
+.confirm-modal p {
+  margin-bottom: 15px;
+}
+
+.confirm-modal .modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

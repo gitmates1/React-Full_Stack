@@ -2,22 +2,34 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ScrollToTop from "./ScrollToTop";
+
+// Public Pages
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import PriceComparison from "./components/PriceComparison";
+
+// Auth / User
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import AdminDashboard from "./pages/AdminDashboard";
+import Profile from "./pages/Profile";
 import ProtectedRoute from "./pages/ProtectedRoute";
-import ScrollToTop from "./ScrollToTop";
-import AdminUsers from "./pages/AdminUsers";
-import UpdateUser from "./pages/UpdateUser";
-import ViewUser from "./pages/ViewUser";
-import DeleteUser from "./pages/DeleteUser";
-import Profile from "./pages/Profile"
+
+// Admin
+import AdminDashboard from "./pages/AdminDashboard";
+
+// Customers CRUD
+import ViewCustomers from "./pages/Customers/ViewCustomers";
+import AddCustomer from "./pages/Customers/AddCustomer";
+import UpdateCustomer from "./pages/Customers/UpdateCustomer";
+
+// Orders CRUD
+import ViewOrders from "./pages/Orders/ViewOrders";
+import AddOrder from "./pages/Orders/AddOrder";
+import UpdateOrder from "./pages/Orders/UpdateOrder";
 
 function App() {
   return (
@@ -34,7 +46,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Protected Routes */}
+        {/* User Protected */}
         <Route
           path="/dashboard"
           element={
@@ -43,6 +55,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin Protected */}
         <Route
           path="/admin-dashboard"
           element={
@@ -52,11 +75,57 @@ function App() {
           }
         />
 
-        <Route path="/admin/users" element={<AdminUsers />} />
-        <Route path="/admin/users/update/:id" element={<UpdateUser />} />
-        <Route path="/admin/users/view/:id" element={<ViewUser />} />
-        <Route path="/admin/users/delete/:id" element={<DeleteUser />} />
-        <Route path="/profile" element={<ProtectedRoute> <Profile /> </ProtectedRoute>} />
+        {/* Customers CRUD (Admin Only) */}
+        <Route
+          path="/admin/customers"
+          element={
+            <ProtectedRoute role="admin">
+              <ViewCustomers />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/customers/add"
+          element={
+            <ProtectedRoute role="admin">
+              <AddCustomer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/customers/update/:id"
+          element={
+            <ProtectedRoute role="admin">
+              <UpdateCustomer />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Orders CRUD (Admin Only) */}
+        <Route
+          path="/admin/orders"
+          element={
+            <ProtectedRoute role="admin">
+              <ViewOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/orders/add"
+          element={
+            <ProtectedRoute role="admin">
+              <AddOrder />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/orders/update/:id"
+          element={
+            <ProtectedRoute role="admin">
+              <UpdateOrder />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />

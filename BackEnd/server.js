@@ -3,40 +3,40 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const app = express();
+const Port = process.env.PORT || 5000;
 
+// Mount Middleware
 const authRoutes = require("./routes/auth");
-const adminRoutes = require("./routes/admin");    // <-- FIXED
+const adminRoutes = require("./routes/admin");
+const custRoute = require("./routes/customers");
+const orderRoute = require("./routes/orders");
 const adminStats = require("./routes/adminstats");
-
 const authMiddleware = require("./middleware/auth");
 const adminMiddleware = require("./middleware/admin");
 
-const app = express();
-
+// Parse req.body
 app.use(cors());
 app.use(express.json());
 
-// Connect DB
+// Connection
 connectDB();
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/admin", adminMiddleware, adminRoutes); // FIX: use admin.js
-app.use("/api/admin", adminMiddleware, adminStats);  // admin stats
+app.use("/api/admin", adminMiddleware, adminRoutes);
+app.use("/api/admin", adminMiddleware, adminStats);
+app.use("/api/customers", custRoute);
+app.use("/api/orders", orderRoute);
 
-// User-protected
-app.get("/api/user/profile", authMiddleware, (req, res) => {
-  res.json({ message: "User Profile Access", user: req.user });
-});
+// User Protected Route
+app.get("/api/user/profile", authMiddleware, (req, res) => { res.json({ message: "User Profile Access", user: req.user }); });
 
-// Admin-only test route
-app.get("/api/admin/dashboard", authMiddleware, adminMiddleware, (req, res) => {
-  res.json({ message: "Admin Dashboard Access", user: req.user });
-});
+// Admin Protected Route
+app.get("/api/admin/dashboard", authMiddleware, adminMiddleware, (req, res) => { res.json({ message: "Admin Dashboard Access", user: req.user }); });
 
 // Root
-app.get("/", (req, res) => res.send("Server is running..."));
+app.get("/", (req, res) => res.send("Server is Listening"));
 
 // Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(Port, () => console.log(`Server running on port ${Port}`));

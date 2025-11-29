@@ -1,21 +1,13 @@
-// backend/models/user.js
+// BackEnd/models/Customer.js
 const mongoose = require("mongoose");
-const { v4: uuidv4 } = require("uuid");
+const { v4: uuidv4 } = require("uuid"); // npm install uuid
 
-const userSchema = new mongoose.Schema(
-  {
-    userId: {
-      type: String,
-      default: uuidv4,
-      unique: true
-    },
-    name: { type: String, required: true, trim: true },
-    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-    password: { type: String, required: true, minlength: 6 },
-    role: { type: String, enum: ["user", "admin"], default: "user" },
-    status: { type: String, enum: ["active", "blocked"], default: "active" }
-  },
-  { timestamps: true }
-);
+const customerSchema = new mongoose.Schema({
+  customerId: { type: String, unique: true, default: () => uuidv4() }, // auto-generated unique ID
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  status: { type: String, enum: ["active", "blocked"], default: "active" },
+  role: { type: String, enum: ["user", "admin"], default: "user" },
+}, { timestamps: true });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Customer", customerSchema);

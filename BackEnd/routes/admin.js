@@ -3,56 +3,34 @@ const express = require("express");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
-
+const Customer = require("../models/user");
+const Order = require("../models/orders");
 const router = express.Router();
 
-// GET ALL USERS + SEARCH + FILTER
+// Get User Search + Filter
 router.get("/users", auth, admin, async (req, res) => {
   const { search, filter } = req.query;
-
   let query = {};
-
-  if (search) {
-    query = {
-      $or: [
-        { name: new RegExp(search, "i") },
-        { email: new RegExp(search, "i") },
-        { userId: new RegExp(search, "i") }
-      ]
-    };
-  }
-
+  if (search) { query = { $or: [ { name: new RegExp(search, "i") }, { email: new RegExp(search, "i") }, { userId: new RegExp(search, "i") }] }; }
   if (filter === "admin") query.role = "admin";
   if (filter === "user") query.role = "user";
   if (filter === "blocked") query.status = "blocked";
   if (filter === "active") query.status = "active";
-
   const users = await User.find(query).select("-password");
   res.json(users);
 });
 
-// UPDATE USER
-router.put("/users/update/:id", auth, admin, async (req, res) => {
-  const updated = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true
-  }).select("-password");
+// Update User
+router.put("/users/update/:id", auth, admin, async (req, res) => { const updated = await User.findByIdAndUpdate(req.params.id, req.body, { new: true }).select("-password"); res.json(updated); });
 
-  res.json(updated);
-});
+// Delete User
+router.delete("/users/delete/:id", auth, admin, async (req, res) => { await User.findByIdAndDelete(req.params.id); res.json({ message: "User deleted successfully" }); });
 
-// DELETE USER
-router.delete("/users/delete/:id", auth, admin, async (req, res) => {
-  await User.findByIdAndDelete(req.params.id);
-  res.json({ message: "User deleted successfully" });
-});
-
-// BLOCK / UNBLOCK USER
+// Block / Unblock User
 router.put("/users/status/:id", auth, admin, async (req, res) => {
   const user = await User.findById(req.params.id);
-
   user.status = user.status === "active" ? "blocked" : "active";
   await user.save();
-
   res.json({ message: `User is now ${user.status}` });
 });
 

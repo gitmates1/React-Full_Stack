@@ -9,42 +9,16 @@ const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null); // dropdown state
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [stats, setStats] = useState({ totalOrders: 0, totalWishlist: 0, totalCart: 0, totalProduct: 0, });
 
   const navigate = useNavigate();
-
-  // auth check
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (!storedUser) navigate("/login");
-    else setUser(storedUser);
-  }, [navigate]);
+  useEffect(() => { const storedUser = JSON.parse(localStorage.getItem("user")); if (!storedUser) navigate("/login"); else setUser(storedUser); }, [navigate]);
 
   // Close profile menu on outside click
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (!document.querySelector(".profile-container")?.contains(e.target)) {
-        setShowProfileMenu(false);
-      }
-    };
+  useEffect(() => { const handleClickOutside = (e) => { if (!document.querySelector(".profile-container")?.contains(e.target)) { setShowProfileMenu(false); } }; document.addEventListener("click", handleClickOutside); return () => { document.removeEventListener("click", handleClickOutside); }; }, []);
 
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/login");
-    setTimeout(() => alert("You are now logout."), 300);
-  };
-
-  // toggle function
-  const toggleDropdown = (menu) => {
-    setOpenDropdown(prev => (prev === menu ? null : menu));
-  };
+  const handleLogout = () => { localStorage.removeItem("token"); localStorage.removeItem("user"); navigate("/login"); setTimeout(() => alert("You are now logout."), 300); };
+  const toggleDropdown = (menu) => { setOpenDropdown(prev => (prev === menu ? null : menu)); };
 
   return (
     <div className="dashboard">
@@ -107,18 +81,8 @@ const Dashboard = () => {
             
             {/* Profile Dropdown */}
             <div className="profile-container">
-              <div
-                className="profile-icon"
-                onClick={(e) => {
-                  e.stopPropagation(); // stops closing when clicking icon
-                  setShowProfileMenu(!showProfileMenu);
-                }}
-              >
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
-                  alt="profile"
-                  className="profile-img"
-                />
+              <div className="profile-icon" onClick={(e) => { e.stopPropagation(); setShowProfileMenu(!showProfileMenu); }} >
+                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="profile" className="profile-img" />
               </div>
 
               {showProfileMenu && (
@@ -134,24 +98,12 @@ const Dashboard = () => {
         </header>
 
         {/* Cards */}
-        <section className="cards">
-          <div className="card">
-            <h3>Orders</h3>
-            <p>456</p>
-          </div>
-          <div className="card">
-            <h3>Wishlist</h3>
-            <p>456</p>
-          </div>
-          <div className="card">
-            <h3>Products</h3>
-            <p>124</p>
-          </div>
-          <div className="card">
-            <h3>Cart</h3>
-            <p>200</p>
-          </div>
-        </section>
+        <div className="cards">
+          <div className="card"> <h3> Orders </h3> <p>{stats.totalOrders} </p> </div>
+          <div className="card"> <h3> Wishlist </h3> <p>{stats.totalWishlist} </p> </div>
+          <div className="card"> <h3> Products </h3> <p>{stats.totalProduct}</p> </div>
+          <div className="card"> <h3> Cart </h3> <p>{stats.totalCart}</p> </div>
+        </div>
 
         <br></br><hr></hr><br></br>
 
@@ -160,24 +112,102 @@ const Dashboard = () => {
           <button className="buttons"> Track Status </button>
           <button className="buttons"> Manage Refunds </button>
           <button className="buttons"> Manage Payment </button>
-          <button className="buttons"> Payment History </button>
+          <button className="buttons"> History </button>
           <button className="buttons"> Billing Address </button>
         </div>
 
-        <div className="recent-side">
+        <div className="recent-side" id="orders">
           <section className="recent-orders">
-            <h4>Recent Orders</h4>
+            <h4>Orders</h4>
+            <div className="table-scroll">
+            <table>
+              <tbody>
+                <thead>
+                  <th>Order ID</th>
+                  <th>Product ID</th>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Order Date</th>
+                  <tr>
+                    <td>13313</td>
+                    <td>23434</td>
+                    <td>T-Shirt</td>
+                    <td>2</td>
+                    <td>Rs.10,000</td>
+                    <td className="status-pending">Pending</td>
+                    <td>22 Nov 2025</td>
+                  </tr>
+                  <tr>
+                    <td>13313</td>
+                    <td>23434</td>
+                    <td>T-Shirt</td>
+                    <td>2</td>
+                    <td>Rs.10,000</td>
+                    <td className="status-pending">Pending</td>
+                    <td>22 Nov 2025</td>
+                  </tr>
+                   <tr>
+                    <td>13313</td>
+                    <td>23434</td>
+                    <td>T-Shirt</td>
+                    <td>2</td>
+                    <td>Rs.10,000</td>
+                    <td className="status-pending">Pending</td>
+                    <td>22 Nov 2025</td>
+                  </tr>
+                  <tr>
+                    <td>13313</td>
+                    <td>23434</td>
+                    <td>T-Shirt</td>
+                    <td>2</td>
+                    <td>Rs.10,000</td>
+                    <td className="status-pending">Pending</td>
+                    <td>22 Nov 2025</td>
+                  </tr>
+                  <tr>
+                    <td>13313</td>
+                    <td>23434</td>
+                    <td>T-Shirt</td>
+                    <td>2</td>
+                    <td>Rs.10,000</td>
+                    <td className="status.pending">Pending</td>
+                    <td>22 Nov 2025</td>
+                  </tr>
+                  <tr>
+                    <td>13313</td>
+                    <td>23434</td>
+                    <td>T-Shirt</td>
+                    <td>2</td>
+                    <td>Rs.10,000</td>
+                    <td className="status.pending">Pending</td>
+                    <td>22 Nov 2025</td>
+                  </tr>
+                  <tr>
+                    <td>13313</td>
+                    <td>23434</td>
+                    <td>T-Shirt</td>
+                    <td>2</td>
+                    <td>Rs.10,000</td>
+                    <td className="status.pending">Pending</td>
+                    <td>22 Nov 2025</td>
+                  </tr>
+                </thead>
+              </tbody>
+            </table>
+            </div>
           </section>
 
           <section className="side-content">
-            <h4>AI Chatbot</h4>
+            <h3>AI Chatbot</h3>
             <div className="sc-content">
-              <p><AiFillRobot /> Hi, Outfitly Chatbot is here.</p>
+              <p style={{fontFamily: "systemsystem-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"}}><AiFillRobot /> Hi, Outfitly Chatbot is here.</p>
             </div>
           </section>
         </div>
 
-        <section className="below-content">
+        <section className="below-content" id="nav">
           <h4>Navigation</h4>
         </section>
       </main>

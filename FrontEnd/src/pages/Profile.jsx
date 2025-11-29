@@ -23,7 +23,7 @@ const Profile = () => {
 
   return (
     <div style={styles.container}>
-      <h2>My Account</h2>
+      <h3 style={{fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"}}>My Account</h3>
 
       <div style={styles.card}>
         <label>Name:</label>
@@ -51,7 +51,7 @@ const Profile = () => {
 };
 
 const styles = {
-  container: { padding: "30px" },
+  container: { padding: "30px"},
   card: {
     maxWidth: "400px",
     display: "flex",
@@ -69,7 +69,7 @@ const styles = {
   btn: {
     marginTop: "10px",
     padding: "10px",
-    background: "black",
+    background: "#d33c44",
     color: "white",
     border: "none",
     borderRadius: "6px",
