@@ -17,7 +17,13 @@ exports.getOrders = async (req, res) => {
   }
 
   const orders = await Order.find(query);
-  res.json(orders);
+  const ordersWithCustomer = await Promise.all(
+  orders.map(async (o) => {
+    const customer = await Customer.findOne({ userId: o.customerId });
+    return { ...o._doc, customerName: customer?.name || "Unknown" };
+  })
+);
+res.json(ordersWithCustomer);
 };
 
 // Add New Order

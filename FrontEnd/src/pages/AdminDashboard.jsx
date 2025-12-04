@@ -116,6 +116,7 @@ const AdminDashboard = () => {
           )}
 
           <li><FiBell /> Notifications</li>
+          <hr /><li onClick={handleLogout}> <FiLogOut/> Logout </li>
         </ul>
       </aside>
 

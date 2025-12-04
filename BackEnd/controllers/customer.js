@@ -1,6 +1,8 @@
 // BackEnd/controllers/customer.js
 
 const Customer = require("../models/user");
+const bcrypt = require("bcryptjs");
+const authRoute = require('../routes/auth')
 
 // Get All Customers + Search + Filter
 exports.getCustomers = async (req, res) => {
@@ -26,11 +28,23 @@ exports.addCustomer = async (req, res) => {
   try {
     const { name, email, status } = req.body;
 
-    const newCustomer = new Customer({ name, email, status });
-    await newCustomer.save();
+    // Default password
+    const defaultPassword = "123";
 
+    // Hash password
+    const hashedPassword = await bcrypt.hash(defaultPassword, 10);
+
+    const newCustomer = new Customer({
+      name,
+      email,
+      status,
+      password: hashedPassword, // hashed
+    });
+
+    await newCustomer.save();
     res.status(201).json(newCustomer);
-  } catch (err) {
+  }
+  catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to add customer" });
   }

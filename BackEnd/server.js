@@ -24,8 +24,8 @@ connectDB();
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/admin", adminMiddleware, adminRoutes);
-app.use("/api/admin", adminMiddleware, adminStats);
+app.use("/api/admin", adminRoutes);
+app.use("/api/admin", adminStats);
 app.use("/api/customers", custRoute);
 app.use("/api/orders", orderRoute);
 

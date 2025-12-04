@@ -17,7 +17,7 @@ router.post("/signup", async (req, res) => {
     const existing = await User.findOne({ email });
     if (existing) return res.status(400).json({ message: "Email already registered!" });
     const hashed = await bcrypt.hash(password, 10);
-    const newUser = new User({name, email, password: hashed, role: "user",});
+    const newUser = new User({ name, email, password: hashed, role: "user", });
     await newUser.save();
     res.json({ message: "Account created! Please login." });
   }
@@ -30,21 +30,36 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
     // Admin login
     if (email === "admin@gmail.com") {
-      const hashedAdmin = await bcrypt.hash("admin123", 10); // ensure hash matches db
-      const match = await bcrypt.compare(password, hashedAdmin);
-      if (!match) return res.status(400).json({ message: "Invalid credentials!" });
-      const token = jwt.sign({ id: "adminid", email, role: "admin" }, SECRET, { expiresIn: "1d" });
-      return res.json({ message: "Login successful", token, user: { id: "adminid", name: "Admin", email, role: "admin" } });
+      if (password !== "admin123") {
+        return res.status(400).json({ message: "Invalid credentials!" });
+      }
+
+      const token = jwt.sign(
+        { id: "adminid", email, role: "admin" },
+        SECRET,
+        { expiresIn: "7d" }
+      );
+
+      return res.json({
+        message: "Login successful",
+        token,
+        user: { id: "adminid", name: "Admin", email, role: "admin" }
+      });
     }
     // User login
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Invalid credentials!" });
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(400).json({ message: "Invalid credentials!" });
-    const token = jwt.sign({ id: user._id, email: user.email, role: user.role }, SECRET, { expiresIn: "1d" });
+    const token = jwt.sign({ id: user._id, email: user.email, role: user.role }, SECRET, { expiresIn: "7d" });
     res.json({ message: "Login successful", token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
   }
   catch (err) { console.error("Login Error:", err); res.status(500).json({ message: "Server error" }); }
+});
+
+// Token Verify
+router.get("/verify-token", authMiddleware, (req, res) => {
+  res.json({ valid: true, user: req.user });
 });
 
 // Change Password
@@ -52,14 +67,16 @@ router.post("/change-password", authMiddleware, async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
     const user = await User.findById(req.user.id);
+
     if (!user) return res.status(404).json({ message: "User not found" });
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) return res.status(400).json({ message: "Old password is incorrect" });
+    
     const hash = await bcrypt.hash(newPassword, 10);
     user.password = hash;
     await user.save();
     res.json({ message: "Password updated successfully" });
-  } 
+  }
   catch (err) { res.status(500).json({ message: "Server error" }); }
 });
 

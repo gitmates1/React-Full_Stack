@@ -65,6 +65,7 @@ export default function ViewOrders({ refreshStats }) {
           <option value="">All</option>
           <option value="pending">Pending</option>
           <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
         </select>
       </div>
 
@@ -73,7 +74,7 @@ export default function ViewOrders({ refreshStats }) {
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Customer</th>
+              <th>Customer ID</th>
               <th>Product</th>
               <th>Quantity</th>
               <th>Price</th>
@@ -85,7 +86,7 @@ export default function ViewOrders({ refreshStats }) {
             {orders.map((o) => (
               <tr key={o._id}>
                 <td>{o.orderId}</td>
-                <td>{o.customerName}</td>
+                <td>{o.customerId}</td>
                 <td>{o.productName}</td>
                 <td>{o.quantity}</td>
                 <td>{o.price}</td>
@@ -105,12 +106,14 @@ export default function ViewOrders({ refreshStats }) {
         <div className="confirm-modal-overlay">
           <div className="confirm-modal order-form-card">
             <h5>Edit Order</h5>
+            <input value={editOrder.orderId} disabled />
             <input type="text" value={editOrder.productName} onChange={(e) => setEditOrder({ ...editOrder, productName: e.target.value })} />
             <input type="number" value={editOrder.quantity} onChange={(e) => setEditOrder({ ...editOrder, quantity: e.target.value })} />
             <input type="number" value={editOrder.price} onChange={(e) => setEditOrder({ ...editOrder, price: e.target.value })} />
             <select value={editOrder.status} onChange={(e) => setEditOrder({ ...editOrder, status: e.target.value })}>
-              <option value="pending">Pending</option>
-              <option value="completed">Completed</option>
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
             </select>
             <div className="modal-buttons">
               <button className="btn btn-primary" onClick={updateOrder}>Save</button>

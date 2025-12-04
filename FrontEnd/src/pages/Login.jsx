@@ -1,3 +1,4 @@
+// FrontEnd/src/pages/Login.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -25,9 +26,10 @@ const Login = () => {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    fetch("/api/verify-token", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    fetch("/api/auth/verify-token", {
+  headers: { "x-auth-token": token }
+})
+
       .then((res) => {
         if (!res.ok) throw new Error();
         navigate("/dashboard");
@@ -79,7 +81,7 @@ const Login = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       // REDIRECT BASED ON ROLE
-      if (data.user.role === "admin") {
+      if (data.user.role.toLowerCase() !== "admin") {
         navigate("/admin-dashboard");
       } else {
         navigate("/dashboard");
